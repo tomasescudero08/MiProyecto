@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: hotelpro-app
+        container_name: hotelpro_app
+        restart: unless-stopped
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+        networks:
+            - hotelpro-net
+
+    webserver:
+        image: nginx:alpine
+        container_name: hotelpro_webserver
+        restart: unless-stopped
+        ports:
+            - "80:80"
+        volumes:
+            - ./:/var/www
+            - ./docker/nginx/conf.d:/etc/nginx/conf.d
+        networks:
+            - hotelpro-net
+
+networks:
+    hotelpro-net:
+        driver: bridge

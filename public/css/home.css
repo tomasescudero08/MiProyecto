@@ -1,0 +1,649 @@
+html, body {
+    background-color: #121519 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100%;
+    overflow-x: hidden; /* Evita scroll horizontal */
+}
+
+/* 2. Barra de Navegación Flotante y Transparente */
+.navbar-hotel {
+    position: absolute; /* Queda flotando sobre el carrusel */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100; /* Asegura que el menú siempre esté visible por encima de las imágenes */
+    background: linear-gradient(180deg, rgba(18, 21, 25, 0.8) 0%, rgba(18, 21, 25, 0) 100%) !important; /* Degradado suave para legibilidad */
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+}
+
+/* Tipografía del Logo */
+.brand-hotel {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #ffffff !important;
+}
+.brand-hotel span {
+    color: #d4af37; /* Acento dorado */
+    font-style: italic;
+}
+
+/* Enlaces de Navegación */
+.nav-link-hotel {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #e0e0e0 !important; /* Color ligeramente más brillante para destacar sobre imágenes */
+    transition: all 0.3s ease;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+}
+
+.nav-link-hotel:hover,
+.nav-link-hotel.active {
+    color: #d4af37 !important; /* Resaltado dorado */
+}
+
+.btn-reservar {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 1px solid #d4af37;
+    color: #d4af37;
+    background: rgba(18, 21, 25, 0.4); /* Leve fondo transparente */
+    border-radius: 0px;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+}
+
+.btn-reservar:hover {
+    background-color: #d4af37;
+    color: #121519;
+}
+
+/* 3. Hero Section / Carrusel a Pantalla Completa (100% Ancho y Alto) */
+.hero-section-wrapper {
+    background-color: #121519;
+    width: 100vw; /* 100% del ancho de la ventana */
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.hero-carousel {
+    position: relative;
+    width: 100%;
+    background-color: #121519;
+}
+
+.hero-carousel .carousel-item {
+    width: 100%;
+    height: 100vh; /* Ocupa el 100% de la altura de la pantalla */
+    min-height: 600px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    /* Transición ultra fluida */
+    transition: transform 1.2s ease-in-out, opacity 1.2s ease-in-out !important;
+}
+
+/* Si usas etiquetas <img> dentro del carrusel en vez de background-image: */
+.hero-carousel .carousel-item img {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover; /* Ajusta la imagen sin deformarla */
+    object-position: center;
+}
+
+/* Capa oscura superpuesta para mejorar la legibilidad del texto y el menú superior */
+.hero-carousel .carousel-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        180deg,
+        rgba(18, 21, 25, 0.5) 0%,   /* Oscurece arriba para leer el menú */
+        rgba(18, 21, 25, 0.3) 40%,
+        rgba(18, 21, 25, 0.85) 100%  /* Oscurece abajo para leer el título y precio */
+    );
+    z-index: 1;
+}
+
+/* Contenido centrado */
+.hero-carousel .carousel-caption {
+    bottom: 12%;
+    z-index: 2;
+    max-width: 850px;
+    margin: 0 auto;
+    left: 10%;
+    right: 10%;
+}
+
+.hero-tag {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #d4af37;
+    margin-bottom: 0.8rem;
+    display: inline-block;
+}
+
+.hero-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 3.2rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.hero-description {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.95rem;
+    color: #cfd4da;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.hero-price {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.8rem;
+    color: #ffffff;
+}
+
+.hero-price span {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: #a0a5ab;
+    text-transform: uppercase;
+}
+
+.btn-hero {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background-color: #d4af37;
+    color: #121519;
+    border: 1px solid #d4af37;
+    border-radius: 0px;
+    padding: 12px 28px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.btn-hero:hover {
+    background-color: transparent;
+    color: #d4af37;
+}
+
+/* Indicadores personalizados */
+.hero-carousel .carousel-indicators {
+    z-index: 3;
+    bottom: 20px;
+}
+
+.hero-carousel .carousel-indicators [data-bs-target] {
+    width: 30px;
+    height: 2px;
+    background-color: #ffffff;
+    opacity: 0.3;
+}
+
+.hero-carousel .carousel-indicators .active {
+    background-color: #d4af37;
+    opacity: 1;
+    width: 45px;
+}
+
+/* Adaptación Móvil */
+@media (max-width: 768px) {
+    .hero-carousel .carousel-item,
+    .hero-carousel .carousel-item img {
+        height: 100vh;
+    }
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    .hero-carousel .carousel-caption {
+        left: 5%;
+        right: 5%;
+        bottom: 8%;
+    }
+}
+.hotel-feature-section {
+    background-color: #121519;
+    position: relative;
+    z-index: 2;
+}
+
+/* Etiqueta superior estilo píldora */
+.feature-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #d4af37;
+}
+
+.badge-dot {
+    width: 6px;
+    height: 6px;
+    background-color: #d4af37;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #d4af37;
+}
+
+.feature-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.8rem;
+    font-weight: 500;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+.text-gold {
+    color: #d4af37 !important;
+}
+
+.feature-description {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.95rem;
+    color: #cfd4da;
+    line-height: 1.8;
+}
+
+/* Botones específicos de la sección */
+.btn-gold-solid {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background-color: #d4af37;
+    color: #121519;
+    border: 1px solid #d4af37;
+    border-radius: 0px;
+    padding: 12px 28px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.btn-gold-solid:hover {
+    background-color: transparent;
+    color: #d4af37;
+}
+
+.btn-gold-outline {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background-color: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0px;
+    padding: 12px 28px;
+    transition: all 0.3s ease;
+}
+
+.btn-gold-outline:hover {
+    border-color: #d4af37;
+    color: #d4af37;
+}
+
+/* Estadísticas */
+.stat-number {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.stat-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #a0a5ab;
+}
+
+/* Imagen y tarjeta flotante */
+.feature-img {
+    height: 420px;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.floating-badge {
+    position: absolute;
+    bottom: -20px;
+    left: 20px;
+    background: rgba(18, 21, 25, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    max-width: 280px;
+}
+
+@media (max-width: 992px) {
+    .feature-title {
+        font-size: 2.2rem;
+    }
+    .floating-badge {
+        position: relative;
+        bottom: 0;
+        left: 0;
+        margin-top: 15px;
+        max-width: 100%;
+    }
+}
+.hero-carousel .carousel-item::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px; /* Reducido a solo 60px para que sea muy fino */
+    background: linear-gradient(
+        to bottom,
+        rgba(18, 21, 25, 0) 0%,
+        rgba(18, 21, 25, 0.4) 50%, /* Difuminado suave en el medio */
+        rgba(18, 21, 25, 1) 100%   /* Une perfectamente con el fondo */
+    );
+    z-index: 2;
+    pointer-events: none; /* Asegura que no interfiera con los clics o botones */
+}
+.section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.2rem;
+    color: #ffffff;
+}
+
+.section-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: #a0a5ab;
+    max-width: 600px;
+}
+
+/* --- ESTILOS DE SERVICIOS --- */
+.hotel-services-section {
+    background-color: #0f1114; /* Tono ligeramente más oscuro para crear contraste entre secciones */
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.service-card {
+    background-color: #171a1f;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(212, 175, 55, 0.4);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.service-icon {
+    font-size: 1.8rem;
+    color: #d4af37;
+}
+
+.service-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: #ffffff;
+    font-size: 1.15rem;
+}
+
+.service-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
+    color: #8c929a;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* --- ESTILOS DE TARJETAS DE HABITACIONES (Basado en la imagen) --- */
+.hotel-rooms-section {
+    background-color: #121519;
+}
+
+.room-card {
+    background-color: #171a1f; /* Fondo de la tarjeta muy oscuro */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.room-card:hover {
+    transform: translateY(-6px);
+    border-color: #d4af37;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+}
+
+.room-img-container {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+
+.room-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.room-card:hover .room-img {
+    transform: scale(1.05);
+}
+
+.badge-tag {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(18, 21, 25, 0.85);
+    color: #e0e0e0;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    padding: 3px 10px;
+    border-radius: 4px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.badge-tag.gold-badge {
+    background: #d4af37;
+    color: #121519;
+    font-weight: 600;
+}
+
+.room-stars {
+    color: #d4af37; /* Estrellas doradas */
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+.rating-text {
+    color: #8c929a;
+    font-size: 0.75rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.room-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+    color: #ffffff;
+}
+
+.room-category {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    color: #8c929a;
+}
+
+.room-short-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.78rem;
+    color: #b0b5bc;
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+.room-price {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.room-price small {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    color: #8c929a;
+    font-weight: normal;
+}
+
+/* Botón de compra / reserva de la tarjeta (Inspirado en el botón rojo de la imagen pero adaptado a Dorado) */
+.btn-room-buy {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background-color: #d4af37;
+    color: #121519;
+    font-weight: 600;
+    padding: 6px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-room-buy:hover {
+    background-color: #ffffff;
+    color: #121519;
+}
+.hotel-footer {
+    background-color: #0b0d0f; /* Tono de fondo aún más oscuro para cerrar la página */
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: #a0a5ab;
+}
+
+/* Descripción de la marca */
+.footer-description {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #8c929a;
+}
+
+/* Encabezados con submarcado inferior (Línea dorada como en la foto) */
+.footer-heading {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #ffffff;
+    position: relative;
+    padding-bottom: 8px;
+    display: inline-block;
+}
+
+.footer-heading::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 25px; /* Ancho del subrayado */
+    height: 2px;
+    background-color: #d4af37; /* Acento dorado */
+}
+
+/* Enlaces de Navegación */
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-links a {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    color: #8c929a;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #d4af37;
+    padding-left: 4px; /* Sutil efecto al pasar el cursor */
+}
+
+/* Datos de Contacto */
+.footer-contact {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    color: #8c929a;
+}
+
+.contact-icon {
+    color: #d4af37; /* Iconos en dorado */
+    font-size: 0.9rem;
+}
+
+/* Botones Circulares de Redes Sociales */
+.social-icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #171a1f;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.social-icon-btn:hover {
+    background-color: #d4af37;
+    color: #121519;
+    border-color: #d4af37;
+    transform: translateY(-3px);
+}
+
+/* Derechos de autor */
+.footer-copyright {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75rem;
+    color: #6c757d;
+}
