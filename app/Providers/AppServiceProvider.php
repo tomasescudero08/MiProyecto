@@ -34,7 +34,8 @@ class AppServiceProvider extends ServiceProvider
         if (Schema::hasTable('reviews')) {
             View::share('reviews', Review::where('is_approved', true)->latest()->take(3)->get());
         }
-        if ($this->app->environment('production')) {
+
+        if (config('app.env') === 'production') {
             URL::forceScheme('https');
         }
     }

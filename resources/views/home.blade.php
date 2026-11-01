@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>HotelPro</title>
 
-    <!-- Bootstrap CSS v5.3.8 -->
+    <!-- Boot   strap CSS v5.3.8 -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -21,7 +21,6 @@
         crossorigin="anonymous"
     >
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body>
@@ -503,5 +502,6 @@
         </div>
     </div>
 </div>
+@vite(['resources/js/app.js'])
 </body>
 </html>
