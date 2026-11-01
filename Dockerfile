@@ -60,6 +60,4 @@ EXPOSE 9000
 
 RUN chown -R www-data:www-data /var/www/public /var/www/storage /var/www/bootstrap/cache
 
-RUN npm run build -- --verbose
-
 CMD /bin/bash -c "php artisan config:clear && php artisan migrate --force && envsubst '\$PORT' < /etc/nginx/conf.d/app.conf.template > /etc/nginx/conf.d/app.conf && php-fpm -D && nginx -g 'daemon off;'"
