@@ -60,4 +60,7 @@ RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 EXPOSE 9000
 
 # 14. Único CMD al final para limpiar caché, migrar, procesar el puerto de Render y levantar Nginx + PHP-FPM
+
+RUN chown -R www-data:www-data /var/www/public /var/www/storage /var/www/bootstrap/cache
+
 CMD /bin/bash -c "php artisan config:clear && php artisan migrate --force && envsubst '\$PORT' < /etc/nginx/conf.d/app.conf.template > /etc/nginx/conf.d/app.conf && php-fpm -D && nginx -g 'daemon off;'"
