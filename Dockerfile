@@ -41,7 +41,7 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs
 
 # 8. Copiar package.json e instalar dependencias de Node
-COPY package.json package-lock.json ./
+COPY package.json ./
 RUN npm install
 
 # 9. Copiar el resto del código del proyecto
