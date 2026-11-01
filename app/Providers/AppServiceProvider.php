@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\URL;
 use App\Models\Service;
 use App\Models\Review;
 
@@ -32,6 +33,9 @@ class AppServiceProvider extends ServiceProvider
 
         if (Schema::hasTable('reviews')) {
             View::share('reviews', Review::where('is_approved', true)->latest()->take(3)->get());
+        }
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
         }
     }
 }
