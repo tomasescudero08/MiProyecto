@@ -36,17 +36,28 @@ COPY composer.json composer.lock ./
 ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interaction --ignore-platform-reqs
 
-# 7. Copiar el resto del código del proyecto
+# 7. Instalar Node.js y npm para compilar Bootstrap y assets
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
+
+# 8. Copiar package.json e instalar dependencias de Node
+COPY package.json package-lock.json ./
+RUN npm install
+
+# 9. Copiar el resto del código del proyecto
 COPY . /var/www
 
-# 8. Copiar el template de Nginx a su ubicación de configuración
+# 10. Compilar Bootstrap y estilos con Vite para producción
+RUN npm run build
+
+# 11. Copiar el template de Nginx a su ubicación de configuración
 COPY docker/nginx/conf.d/app.conf.template /etc/nginx/conf.d/app.conf.template
 
-# 9. Asignar permisos correctos a storage y bootstrap/cache
+# 12. Asignar permisos correctos a storage y bootstrap/cache
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-# 10. Exponer los puertos necesarios
+# 13. Exponer los puertos necesarios
 EXPOSE 9000
 
-# 11. Único CMD al final para procesar el puerto de Render y levantar Nginx + PHP-FPM
-CMD /bin/bash -c "php artisan migrate --force && envsubst '\$PORT' < /etc/nginx/conf.d/app.conf.template > /etc/nginx/conf.d/app.conf && php-fpm -D && nginx -g 'daemon off;'"
+# 14. Único CMD al final para limpiar caché, migrar, procesar el puerto de Render y levantar Nginx + PHP-FPM
+CMD /bin/bash -c "php artisan config:clear && php artisan migrate --force && envsubst '\$PORT' < /etc/nginx/conf.d/app.conf.template > /etc/nginx/conf.d/app.conf && php-fpm -D && nginx -g 'daemon off;'"
