@@ -47,9 +47,6 @@ RUN npm install
 # 9. Copiar el resto del código del proyecto
 COPY . /var/www
 
-# 10. Compilar Bootstrap y estilos con Vite para producción
-RUN npm run build
-
 # 11. Copiar el template de Nginx a su ubicación de configuración
 COPY docker/nginx/conf.d/app.conf.template /etc/nginx/conf.d/app.conf.template
 
