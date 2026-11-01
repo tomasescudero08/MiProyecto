@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
     app:
         build:
@@ -25,6 +23,23 @@ services:
             - ./docker/nginx/conf.d:/etc/nginx/conf.d
         networks:
             - hotelpro-net
+
+    db:
+        image: mysql:8.0
+        container_name: hotelpro_db
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: MiProyecto
+            MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+        ports:
+            - "33060:3306"
+        volumes:
+            - dbdata:/var/lib/mysql
+        networks:
+            - hotelpro-net
+
+volumes:
+    dbdata:
 
 networks:
     hotelpro-net:

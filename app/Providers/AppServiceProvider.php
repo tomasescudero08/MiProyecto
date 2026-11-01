@@ -25,10 +25,13 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
 
-        Schema::defaultStringLength(191);
+        // Compartir servicios y reseñas solo si las tablas ya existen en la base de datos
+        if (Schema::hasTable('services')) {
+            View::share('services', Service::take(4)->get());
+        }
 
-        View::share('services', Service::take(4)->get());
-        View::share('reviews', Review::where('is_approved', true)->latest()->take(3)->get());
-
+        if (Schema::hasTable('reviews')) {
+            View::share('reviews', Review::where('is_approved', true)->latest()->take(3)->get());
+        }
     }
 }
