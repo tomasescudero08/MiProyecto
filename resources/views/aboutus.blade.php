@@ -25,7 +25,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link nav-link-hotel active" aria-current="page" href="{{ route('home') }}">Inicio</a>
+                        <a class="nav-link nav-link-hotel" aria-current="page" href="{{ route('home') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
                         @auth
