@@ -106,9 +106,6 @@
                     <li class="nav-item">
                         <a class="nav-link nav-link-hotel" href="{{ route('aboutus') }}">Sobre Nosotros</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-hotel active" href="{{ route('reviews.public') }}">Opiniones</a>
-                    </li>
                     @auth
                         <li class="nav-item">
                             <a class="nav-link nav-link-hotel" href="{{ route('contact_messages.index') }}">Bandeja de Contacto</a>

@@ -111,7 +111,7 @@
             <div class="col-md-6 col-lg-4">
                 <div class="service-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: #171a1f; border: 1px solid rgba(255,255,255,0.08);">
                     <div>
-                        <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-concierge-bell"></i></div>
+                        <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-bell"></i></div>
                         <h5 class="service-title text-white fw-bold">Gestión de Servicios</h5>
                         <p class="service-desc mt-2 text-white opacity-75">Configura los servicios, amenidades y experiencias exclusivas para los huéspedes.</p>
                     </div>
