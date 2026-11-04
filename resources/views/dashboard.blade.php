@@ -32,24 +32,16 @@
                         <a class="nav-link nav-link-hotel" href="{{ route('home') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-hotel {{ request()->routeIs('rooms.*') ? 'active' : '' }}" href="{{ route('rooms.index') }}">
-                            Habitaciones (Admin)
-                        </a>
+                        <a class="nav-link nav-link-hotel {{ request()->routeIs('catalogue') ? 'active' : '' }}" href="{{ route('catalogue') }}">Habitaciones</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-hotel {{ request()->routeIs('services.*') ? 'active' : '' }}" href="{{ route('services.index') }}">
-                            Servicios (Admin)
-                        </a>
+                        <a class="nav-link nav-link-hotel {{ request()->routeIs('services.catalogue') ? 'active' : '' }}" href="{{ route('services.catalogue') }}">Servicios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-hotel {{ request()->routeIs('reviews.index') ? 'active' : '' }}" href="{{ route('reviews.index') }}">
-                            Reseñas (Admin)
-                        </a>
+                        <a class="nav-link nav-link-hotel" href="{{ route('aboutus') }}">Sobre Nosotros</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-hotel {{ request()->routeIs('contact_messages.*') ? 'active' : '' }}" href="{{ route('contact_messages.index') }}">
-                            Bandeja de Contacto
-                        </a>
+                        <a class="nav-link nav-link-hotel" href="{{ route('contactus') }}">Contáctanos</a>
                     </li>
                     @auth
                         <li class="nav-item dropdown">

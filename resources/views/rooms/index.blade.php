@@ -85,15 +85,7 @@
                     @endauth
                 </ul>
                 <div class="d-flex">
-                    @auth
-                        <a href="{{ route('reservations.index') }}" class="btn btn-reservar">
-                            <i class="bi bi-shield-lock-fill"></i> Gestionar Reservas
-                        </a>
-                    @else
-                        <a href="{{ route('catalogue') }}" class="btn btn-reservar">
-                            Reservar Ahora
-                        </a>
-                    @endauth
+                    <a href="{{ route('catalogue') }}" class="btn btn-reservar">Reservar ahora</a>
                 </div>
             </div>
         </div>
