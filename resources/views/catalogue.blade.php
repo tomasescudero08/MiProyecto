@@ -25,32 +25,10 @@
                         <a class="nav-link nav-link-hotel" href="{{ route('home') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        @auth
-                            <!-- Logueado: Envía al CRUD / Administración de habitaciones -->
-                            <a class="nav-link nav-link-hotel {{ request()->routeIs('rooms.*') ? 'active' : '' }}" href="{{ route('rooms.index') }}">
-                                Habitaciones (Admin)
-                            </a>
-                        @else
-                            <!-- Invitado: Envía al Catálogo Público -->
-                            <a class="nav-link nav-link-hotel {{ request()->routeIs('catalogue') ? 'active' : '' }}" href="{{ route('catalogue') }}">
-                                Habitaciones
-                            </a>
-                        @endauth
+                        <a class="nav-link nav-link-hotel {{ request()->routeIs('catalogue') ? 'active' : '' }}" href="{{ route('catalogue') }}">Habitaciones</a>
                     </li>
-
-                    <!-- ENLACE DE SERVICIOS -->
                     <li class="nav-item">
-                        @auth
-                            <!-- Logueado: Envía al CRUD / Administración de servicios -->
-                            <a class="nav-link nav-link-hotel {{ request()->routeIs('services.*') ? 'active' : '' }}" href="{{ route('services.index') }}">
-                                Servicios (Admin)
-                            </a>
-                        @else
-                            <!-- Invitado: Envía al Catálogo Público de Servicios -->
-                            <a class="nav-link nav-link-hotel {{ request()->routeIs('services.catalogue') ? 'active' : '' }}" href="{{ route('services.catalogue') }}">
-                                Servicios
-                            </a>
-                        @endauth
+                        <a class="nav-link nav-link-hotel {{ request()->routeIs('services.catalogue') ? 'active' : '' }}" href="{{ route('services.catalogue') }}">Servicios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-link-hotel" href="{{ route('aboutus') }}">Sobre Nosotros</a>

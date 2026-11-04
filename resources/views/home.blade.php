@@ -47,40 +47,17 @@
                         <a class="nav-link nav-link-hotel active" aria-current="page" href="{{ route('home') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        @auth
-                            <a class="nav-link nav-link-hotel {{ request()->routeIs('rooms.*') ? 'active' : '' }}" href="{{ route('rooms.index') }}">
-                                Habitaciones (Admin)
-                            </a>
-                        @else
-                            <a class="nav-link nav-link-hotel {{ request()->routeIs('catalogue') ? 'active' : '' }}" href="{{ route('catalogue') }}">
-                                Habitaciones
-                            </a>
-                        @endauth
+                        <a class="nav-link nav-link-hotel {{ request()->routeIs('catalogue') ? 'active' : '' }}" href="{{ route('catalogue') }}">Habitaciones</a>
                     </li>
-
                     <li class="nav-item">
-                        @auth
-                            <a class="nav-link nav-link-hotel {{ request()->routeIs('services.*') ? 'active' : '' }}" href="{{ route('services.index') }}">
-                                Servicios (Admin)
-                            </a>
-                        @else
-                            <a class="nav-link nav-link-hotel {{ request()->routeIs('services.catalogue') ? 'active' : '' }}" href="{{ route('services.catalogue') }}">
-                                Servicios
-                            </a>
-                        @endauth
+                        <a class="nav-link nav-link-hotel {{ request()->routeIs('services.catalogue') ? 'active' : '' }}" href="{{ route('services.catalogue') }}">Servicios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-link-hotel" href="{{ route('aboutus') }}">Sobre Nosotros</a>
                     </li>
-                    @auth
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-hotel" href="{{ route('contact_messages.index') }}">Bandeja de Contacto</a>
-                        </li>
-                    @else
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-hotel" href="{{ route('contactus') }}">Contáctanos</a>
-                        </li>
-                    @endauth
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-hotel" href="{{ route('contactus') }}">Contáctanos</a>
+                    </li>
                     @guest
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">Iniciar Sesión</a>
@@ -92,12 +69,11 @@
 
                     @auth
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white fw-semibold" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
                                 Hola, {{ Auth::user()->name }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end bg-dark">
                                 <li><a class="dropdown-item text-white" href="{{ route('dashboard') }}">Panel de Control</a></li>
-                                <li><a class="dropdown-item text-warning" href="{{ route('reservations.index') }}">Ver Todas las Reservas (Admin)</a></li>
                                 <li><hr class="dropdown-divider border-secondary"></li>
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
