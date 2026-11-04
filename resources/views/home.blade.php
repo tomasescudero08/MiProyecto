@@ -69,10 +69,10 @@
 
                     @auth
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
                                 Hola, {{ Auth::user()->name }}
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end bg-dark" aria-labelledby="userDropdown">
+                            <ul class="dropdown-menu dropdown-menu-end bg-dark">
                                 <li><a class="dropdown-item text-white" href="{{ route('dashboard') }}">Panel de Control</a></li>
                                 <li><hr class="dropdown-divider border-secondary"></li>
                                 <li>
@@ -309,7 +309,7 @@
 
                     @auth
                         @if(auth()->user()->isAdmin ?? true)
-                        <a href="{{ route('reviews.index') }}" class="btn btn-gold-outline text-uppercase">GESTIONAR RESEÑAS</a>
+                            <a href="{{ route('reviews.index') }}" class="btn btn-gold-outline text-uppercase">GESTIONAR RESEÑAS</a>
                         @else
                             <a href="{{ route('reviews.public') }}" class="btn btn-gold-outline text-uppercase">VER TODAS LAS RESEÑAS</a>
                         @endif
@@ -420,7 +420,11 @@
 </footer>
 
 <!-- Bootstrap JavaScript Bundle -->
-
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"
+></script>
 <!-- Modal para Agregar Reseña -->
 <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -466,11 +470,5 @@
         </div>
     </div>
 </div>
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-    crossorigin="anonymous"
-></script>
-@vite(['resources/js/app.js'])
 </body>
 </html>
