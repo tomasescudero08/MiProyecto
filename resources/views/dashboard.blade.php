@@ -45,12 +45,16 @@
                     </li>
                     @auth
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle active text-gold fw-semibold" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle active text-gold fw-semibold" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Hola, {{ Auth::user()->name }}
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end bg-dark border-secondary">
+                            <ul class="dropdown-menu dropdown-menu-end bg-dark border-secondary" aria-labelledby="userDropdown">
                                 <li><a class="dropdown-item text-white active" href="{{ route('dashboard') }}">Panel de Control</a></li>
-                                <li><a class="dropdown-item text-warning" href="{{ route('reservations.index') }}">Ver Todas las Reservas</a></li>
+                                @if(Auth::user()->is_admin)
+                                    <li><a class="dropdown-item text-warning" href="{{ route('reservations.index') }}">Ver Todas las Reservas</a></li>
+                                @else
+                                    <li><a class="dropdown-item text-warning" href="{{ route('catalogue') }}">Reservar Habitación</a></li>
+                                @endif
                                 <li><hr class="dropdown-divider border-secondary"></li>
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
@@ -63,9 +67,15 @@
                     @endauth
                 </ul>
                 <div class="d-flex">
-                    <a href="{{ route('reservations.index') }}" class="btn btn-reservar">
-                        <i class="bi bi-shield-lock-fill me-1"></i> Gestionar Reservas
-                    </a>
+                    @if(Auth::user()->is_admin)
+                        <a href="{{ route('reservations.index') }}" class="btn btn-reservar">
+                            <i class="bi bi-shield-lock-fill me-1"></i> Gestionar Reservas
+                        </a>
+                    @else
+                        <a href="{{ route('catalogue') }}" class="btn btn-reservar">
+                            <i class="bi bi-calendar-plus me-1"></i> Nueva Reserva
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -74,103 +84,154 @@
 
 <main class="py-5" style="background-color: #121519; min-height: 80vh;">
     <div class="container py-4">
-        <div class="row mb-4 align-items-center">
-            <div class="col">
-                <span class="feature-badge mb-2">
-                    <span class="badge-dot"></span> Panel Administrativo
-                </span>
-                <h1 class="section-title">Bienvenido, {{ Auth::user()->name }}</h1>
-                <p class="section-subtitle text-white opacity-75">Desde aquí puedes administrar todas las secciones clave de HotelPro.</p>
-            </div>
-        </div>
 
-        <div class="row g-4">
-            <!-- 1. GESTIÓN DE HABITACIONES -->
-            <div class="col-md-6 col-lg-4">
-                <div class="service-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: #171a1f; border: 1px solid rgba(255,255,255,0.08);">
-                    <div>
-                        <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-door-open"></i></div>
-                        <h5 class="service-title text-white fw-bold">Gestión de Habitaciones</h5>
-                        <p class="service-desc mt-2 text-white opacity-75">Agrega, edita o elimina las habitaciones y suites disponibles en el catálogo público.</p>
+        @if(Auth::user()->is_admin)
+            <!-- ========================================== -->
+            <!-- PANEL EXCLUSIVO PARA EL ADMINISTRADOR -->
+            <!-- ========================================== -->
+            <div class="row mb-4 align-items-center">
+                <div class="col">
+                    <span class="feature-badge mb-2">
+                        <span class="badge-dot"></span> Panel Administrativo
+                    </span>
+                    <h1 class="section-title">Bienvenido, {{ Auth::user()->name }}</h1>
+                    <p class="section-subtitle text-white opacity-75">Desde aquí puedes administrar todas las secciones clave de HotelPro.</p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <!-- 1. GESTIÓN DE HABITACIONES -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: #171a1f; border: 1px solid rgba(255,255,255,0.08);">
+                        <div>
+                            <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-door-open"></i></div>
+                            <h5 class="service-title text-white fw-bold">Gestión de Habitaciones</h5>
+                            <p class="service-desc mt-2 text-white opacity-75">Agrega, edita o elimina las habitaciones y suites disponibles en el catálogo público.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
+                            <a href="{{ route('rooms.index') }}" class="btn btn-gold-solid w-100 btn-sm fw-semibold">Administrar Habitaciones</a>
+                        </div>
                     </div>
-                    <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
-                        <a href="{{ route('rooms.index') }}" class="btn btn-gold-solid w-100 btn-sm fw-semibold">Administrar Habitaciones</a>
+                </div>
+
+                <!-- 2. GESTIÓN DE SERVICIOS -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: #171a1f; border: 1px solid rgba(255,255,255,0.08);">
+                        <div>
+                            <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-bell"></i></div>
+                            <h5 class="service-title text-white fw-bold">Gestión de Servicios</h5>
+                            <p class="service-desc mt-2 text-white opacity-75">Configura los servicios, amenidades y experiencias exclusivas para los huéspedes.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
+                            <a href="{{ route('services.index') }}" class="btn btn-gold-solid w-100 btn-sm fw-semibold">Administrar Servicios</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. GESTIÓN DE RESERVAS -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: #171a1f; border: 1px solid rgba(255,255,255,0.08);">
+                        <div>
+                            <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-calendar-check"></i></div>
+                            <h5 class="service-title text-white fw-bold">Gestión de Reservas</h5>
+                            <p class="service-desc mt-2 text-white opacity-75">Consulta la lista completa de reservaciones, fechas de estancia y estado de huéspedes.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
+                            <a href="{{ route('reservations.index') }}" class="btn btn-gold-solid w-100 btn-sm fw-semibold">Ver Reservaciones</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. MODERACIÓN DE RESEÑAS -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: #171a1f; border: 1px solid rgba(255,255,255,0.08);">
+                        <div>
+                            <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-star-half"></i></div>
+                            <h5 class="service-title text-white fw-bold">Moderación de Reseñas</h5>
+                            <p class="service-desc mt-2 text-white opacity-75">Revisa las opiniones y calificaciones enviadas por los visitantes, pruébalas u ocúltalas.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
+                            <a href="{{ route('reviews.index') }}" class="btn btn-gold-solid w-100 btn-sm fw-semibold">Gestionar Reseñas</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. BANDEJA DE MENSAJES DE CONTACTO -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: #171a1f; border: 1px solid rgba(255,255,255,0.08);">
+                        <div>
+                            <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-inbox"></i></div>
+                            <h5 class="service-title text-white fw-bold">Bandeja de Contacto</h5>
+                            <p class="service-desc mt-2 text-white opacity-75">Lee y responde las consultas enviadas por clientes a través del formulario de contacto.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
+                            <a href="{{ route('contact_messages.index') }}" class="btn btn-gold-solid w-100 btn-sm fw-semibold">Ver Mensajes</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. ESTADO DEL SISTEMA -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="service-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: #171a1f; border: 1px solid rgba(255,255,255,0.08);">
+                        <div>
+                            <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-shield-check"></i></div>
+                            <h5 class="service-title text-white fw-bold">Estado del Sistema</h5>
+                            <p class="service-desc mt-2 text-white opacity-75">Sesión iniciada de forma segura con el rol verificado de administrador en HotelPro.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 text-white small opacity-75 d-flex justify-content-between align-items-center">
+                            <span class="text-gold"><i class="bi bi-check-circle-fill me-1"></i> Sistema activo</span>
+                            <span class="badge bg-dark border border-secondary text-warning">v1.0 Pro</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- 2. GESTIÓN DE SERVICIOS -->
-            <div class="col-md-6 col-lg-4">
-                <div class="service-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: #171a1f; border: 1px solid rgba(255,255,255,0.08);">
-                    <div>
-                        <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-bell"></i></div>
-                        <h5 class="service-title text-white fw-bold">Gestión de Servicios</h5>
-                        <p class="service-desc mt-2 text-white opacity-75">Configura los servicios, amenidades y experiencias exclusivas para los huéspedes.</p>
-                    </div>
-                    <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
-                        <a href="{{ route('services.index') }}" class="btn btn-gold-solid w-100 btn-sm fw-semibold">Administrar Servicios</a>
-                    </div>
+        @else
+            <!-- ========================================== -->
+            <!-- PANEL PARA EL USUARIO NORMAL REGISTRADO -->
+            <!-- ========================================== -->
+            <div class="row mb-4 align-items-center">
+                <div class="col">
+                    <span class="feature-badge mb-2">
+                        <span class="badge-dot"></span> Mi Panel de Viajero
+                    </span>
+                    <h1 class="section-title">Bienvenido, {{ Auth::user()->name }}</h1>
+                    <p class="section-subtitle text-white opacity-75">Gestiona tus reservas personales y explora nuevas experiencias en HotelPro.</p>
                 </div>
             </div>
 
-            <!-- 3. GESTIÓN DE RESERVAS -->
-            <div class="col-md-6 col-lg-4">
-                <div class="service-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: #171a1f; border: 1px solid rgba(255,255,255,0.08);">
-                    <div>
-                        <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-calendar-check"></i></div>
-                        <h5 class="service-title text-white fw-bold">Gestión de Reservas</h5>
-                        <p class="service-desc mt-2 text-white opacity-75">Consulta la lista completa de reservaciones, fechas de estancia y estado de huéspedes.</p>
+            <div class="row g-4">
+                <!-- Mis Reservas / Estancias -->
+                <div class="col-md-8">
+                    <div class="service-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: #171a1f; border: 1px solid rgba(255,255,255,0.08);">
+                        <div>
+                            <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-journal-bookmark-fill"></i></div>
+                            <h5 class="service-title text-white fw-bold">Mis Estadías y Reservaciones</h5>
+                            <p class="service-desc mt-2 text-white opacity-75">Consulta el historial y los detalles de las habitaciones que has reservado con nosotros.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 d-flex gap-3">
+                            <a href="{{ route('catalogue') }}" class="btn btn-gold-solid btn-sm fw-semibold">Explorar Habitaciones</a>
+                        </div>
                     </div>
-                    <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
-                        <a href="{{ route('reservations.index') }}" class="btn btn-gold-solid w-100 btn-sm fw-semibold">Ver Reservaciones</a>
+                </div>
+
+                <!-- Información del Perfil -->
+                <div class="col-md-4">
+                    <div class="service-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: #171a1f; border: 1px solid rgba(255,255,255,0.08);">
+                        <div>
+                            <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-person-badge-fill"></i></div>
+                            <h5 class="service-title text-white fw-bold">Mi Cuenta</h5>
+                            <p class="text-white opacity-75 small mt-2"><strong>Correo:</strong> {{ Auth::user()->email }}</p>
+                            <p class="text-white opacity-75 small"><strong>Miembro desde:</strong> {{ Auth::user()->created_at->format('d/m/Y') }}</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 text-white small opacity-75">
+                            <span class="text-gold"><i class="bi bi-shield-fill-check me-1"></i> Usuario Verificado</span>
+                        </div>
                     </div>
                 </div>
             </div>
+        @endif
 
-            <!-- 4. MODERACIÓN DE RESEÑAS -->
-            <div class="col-md-6 col-lg-4">
-                <div class="service-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: #171a1f; border: 1px solid rgba(255,255,255,0.08);">
-                    <div>
-                        <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-star-half"></i></div>
-                        <h5 class="service-title text-white fw-bold">Moderación de Reseñas</h5>
-                        <p class="service-desc mt-2 text-white opacity-75">Revisa las opiniones y calificaciones enviadas por los visitantes, pruébalas u ocúltalas.</p>
-                    </div>
-                    <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
-                        <a href="{{ route('reviews.index') }}" class="btn btn-gold-solid w-100 btn-sm fw-semibold">Gestionar Reseñas</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5. BANDEJA DE MENSAJES DE CONTACTO -->
-            <div class="col-md-6 col-lg-4">
-                <div class="service-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: #171a1f; border: 1px solid rgba(255,255,255,0.08);">
-                    <div>
-                        <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-inbox"></i></div>
-                        <h5 class="service-title text-white fw-bold">Bandeja de Contacto</h5>
-                        <p class="service-desc mt-2 text-white opacity-75">Lee y responde las consultas enviadas por clientes a través del formulario de contacto.</p>
-                    </div>
-                    <div class="mt-4 pt-3 border-top border-secondary border-opacity-25">
-                        <a href="{{ route('contact_messages.index') }}" class="btn btn-gold-solid w-100 btn-sm fw-semibold">Ver Mensajes</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 6. ESTADO DEL SISTEMA -->
-            <div class="col-md-6 col-lg-4">
-                <div class="service-card p-4 h-100 d-flex flex-column justify-content-between" style="background-color: #171a1f; border: 1px solid rgba(255,255,255,0.08);">
-                    <div>
-                        <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-shield-check"></i></div>
-                        <h5 class="service-title text-white fw-bold">Estado del Sistema</h5>
-                        <p class="service-desc mt-2 text-white opacity-75">Sesión iniciada de forma segura con el rol verificado de administrador en HotelPro.</p>
-                    </div>
-                    <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 text-white small opacity-75 d-flex justify-content-between align-items-center">
-                        <span class="text-gold"><i class="bi bi-check-circle-fill me-1"></i> Sistema activo</span>
-                        <span class="badge bg-dark border border-secondary text-warning">v1.0 Pro</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
     </div>
 </main>
 
@@ -189,8 +250,8 @@
                 <h5 class="footer-heading mb-3">Navegación</h5>
                 <ul class="list-unstyled footer-links">
                     <li><a href="{{ route('home') }}" class="text-white opacity-75">Inicio</a></li>
-                    <li><a href="{{ route('rooms.index') }}" class="text-white opacity-75">Habitaciones</a></li>
-                    <li><a href="{{ route('services.index') }}" class="text-white opacity-75">Servicios</a></li>
+                    <li><a href="{{ route('catalogue') }}" class="text-white opacity-75">Habitaciones</a></li>
+                    <li><a href="{{ route('services.catalogue') }}" class="text-white opacity-75">Servicios</a></li>
                     <li><a href="{{ route('aboutus') }}" class="text-white opacity-75">Sobre Nosotros</a></li>
                     <li><a href="{{ route('contactus') }}" class="text-white opacity-75">Contáctanos</a></li>
                 </ul>

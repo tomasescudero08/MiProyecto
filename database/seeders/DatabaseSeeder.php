@@ -32,10 +32,11 @@ class DatabaseSeeder extends Seeder
 
         // Crear el usuario de prueba de forma segura (sin duplicar)
         User::firstOrCreate(
-            ['email' => 'test@example.com'],
+            ['email' => 'databaseAdmin@gmail.com'], // Tu correo maestro
             [
-                'name' => 'Test User',
-                'password' => bcrypt('password'),
+                'name' => 'admin',
+                'password' => Hash::Make('databse123'), // Cambia esto por tu contraseña
+                'is_admin' => true, // Único administrador
             ]
         );
     }
