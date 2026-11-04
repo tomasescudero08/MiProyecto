@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\Hash;
 class DatabaseSeeder extends Seeder
 {
     use WithoutModelEvents;
@@ -32,10 +32,10 @@ class DatabaseSeeder extends Seeder
 
         // Crear el usuario de prueba de forma segura (sin duplicar)
         User::firstOrCreate(
-            ['email' => 'databaseAdmin@gmail.com'], // Tu correo maestro
+            ['email' => 'admin@hotelpro.com'], // Tu correo maestro
             [
                 'name' => 'admin',
-                'password' => Hash::Make('databse123'), // Cambia esto por tu contraseña
+                'password' => Hash::Make('database123'), // Cambia esto por tu contraseña
                 'is_admin' => true, // Único administrador
             ]
         );
