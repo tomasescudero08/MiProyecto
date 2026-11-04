@@ -27,7 +27,7 @@
 
 <!-- NAVBAR FLOTANTE -->
 <header>
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-hotel">
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-hotel" style="position: relative; background: #121519 !important; border-bottom: 1px solid rgba(255,255,255,0.08);">
         <div class="container-fluid px-lg-5">
 
             <!-- Logo -->
@@ -69,10 +69,10 @@
 
                     @auth
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Hola, {{ Auth::user()->name }}
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end bg-dark">
+                            <ul class="dropdown-menu dropdown-menu-end bg-dark" aria-labelledby="userDropdown">
                                 <li><a class="dropdown-item text-white" href="{{ route('dashboard') }}">Panel de Control</a></li>
                                 <li><hr class="dropdown-divider border-secondary"></li>
                                 <li>
@@ -420,11 +420,7 @@
 </footer>
 
 <!-- Bootstrap JavaScript Bundle -->
-<script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-    crossorigin="anonymous"
-></script>
+
 <!-- Modal para Agregar Reseña -->
 <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -470,6 +466,11 @@
         </div>
     </div>
 </div>
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"
+></script>
 @vite(['resources/js/app.js'])
 </body>
 </html>
