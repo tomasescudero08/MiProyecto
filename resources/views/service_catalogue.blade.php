@@ -136,7 +136,7 @@
                 <ul class="list-unstyled footer-links">
                     <li><a href="{{ route('home') }}" class="text-white opacity-75">Inicio</a></li>
                     <li><a href="{{ route('catalogue') }}" class="text-white opacity-75">Habitaciones</a></li>
-                    <li><a href="{{ route('services.index') }}" class="text-white opacity-75">Servicios</a></li>
+                    <li><a href="{{ route('services.catalogue') }}" class="text-white opacity-75">Servicios</a></li>
                     <li><a href="{{ route('aboutus') }}" class="text-white opacity-75">Sobre Nosotros</a></li>
                     <li><a href="{{ route('contactus') }}" class="text-white opacity-75">Contáctanos</a></li>
                 </ul>
