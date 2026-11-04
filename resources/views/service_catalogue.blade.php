@@ -25,17 +25,10 @@
                         <a class="nav-link nav-link-hotel" href="{{ route('home') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <!-- Puedes usar la misma ruta de catálogo para ambos, o cambiar el texto si estás logueado -->
-                        <a class="nav-link nav-link-hotel {{ request()->routeIs('catalogue') ? 'active' : '' }}" href="{{ route('catalogue') }}">
-                            @auth Habitaciones (Admin) @else Habitaciones @endauth
-                        </a>
+                        <a class="nav-link nav-link-hotel {{ request()->routeIs('catalogue') ? 'active' : '' }}" href="{{ route('catalogue') }}">Habitaciones</a>
                     </li>
-
-                    <!-- ENLACE DE SERVICIOS -->
                     <li class="nav-item">
-                        <a class="nav-link nav-link-hotel active{{ request()->routeIs('services.index') ? 'active' : '' }}" href="{{ route('services.index') }}">
-                            @auth Servicios (Admin) @else Servicios @endauth
-                        </a>
+                        <a class="nav-link nav-link-hotel {{ request()->routeIs('services.catalogue') ? 'active' : '' }}" href="{{ route('services.catalogue') }}">Servicios</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-link-hotel" href="{{ route('aboutus') }}">Sobre Nosotros</a>
