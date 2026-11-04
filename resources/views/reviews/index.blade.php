@@ -61,43 +61,20 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link nav-link-hotel" href="{{ route('home') }}">Inicio</a>
+                        <a class="nav-link nav-link-hotel" aria-current="page" href="{{ route('home') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        @auth
-                            <a class="nav-link nav-link-hotel {{ request()->routeIs('rooms.*') ? 'active' : '' }}" href="{{ route('rooms.index') }}">
-                                Habitaciones (Admin)
-                            </a>
-                        @else
-                            <a class="nav-link nav-link-hotel {{ request()->routeIs('catalogue') ? 'active' : '' }}" href="{{ route('catalogue') }}">
-                                Habitaciones
-                            </a>
-                        @endauth
-                    </li>
-
-                    <li class="nav-item">
-                        @auth
-                            <a class="nav-link nav-link-hotel {{ request()->routeIs('services.*') ? 'active' : '' }}" href="{{ route('services.index') }}">
-                                Servicios (Admin)
-                            </a>
-                        @else
-                            <a class="nav-link nav-link-hotel {{ request()->routeIs('services.catalogue') ? 'active' : '' }}" href="{{ route('services.catalogue') }}">
-                                Servicios
-                            </a>
-                        @endauth
+                        <a class="nav-link nav-link-hotel {{ request()->routeIs('catalogue') ? 'active' : '' }}" href="{{ route('catalogue') }}">Habitaciones</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-hotel" href="{{ route('aboutus') }}">Sobre Nosotros</a>
+                        <a class="nav-link nav-link-hotel {{ request()->routeIs('services.catalogue') ? 'active' : '' }}" href="{{ route('services.catalogue') }}">Servicios</a>
                     </li>
-                    @auth
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-hotel" href="{{ route('contact_messages.index') }}">Bandeja de Contacto</a>
-                        </li>
-                    @else
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-hotel" href="{{ route('contactus') }}">Contáctanos</a>
-                        </li>
-                    @endauth
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-hotel active" href="{{ route('aboutus') }}">Sobre Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-hotel" href="{{ route('contactus') }}">Contáctanos</a>
+                    </li>
                     @auth
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-white fw-semibold" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
