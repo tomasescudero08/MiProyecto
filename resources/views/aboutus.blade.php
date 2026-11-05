@@ -50,7 +50,7 @@
 
                     @auth
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white fw-semibold" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <a class="nav-link dropdown-toggle active text-gold fw-semibold" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Hola, {{ Auth::user()->name }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end bg-dark">
