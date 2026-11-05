@@ -18,16 +18,13 @@ Route::get('/', [RoomController::class, 'home'])->name('home');
 // Catálogo público de habitaciones
 Route::get('/catalogue', [RoomController::class, 'catalogue'])->name('catalogue');
 
-
 // Catálogo público de servicios (Para los clientes)
 Route::get('/services', [ServiceController::class, 'catalogue'])->name('services.catalogue');
 
+// Reseñas públicas
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-Route::patch('/reviews/{review}/toggle', [ReviewController::class, 'toggleApproval'])->name('reviews.toggle');
-Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
-
-
+Route::get('/opiniones', [ReviewController::class, 'publicIndex'])->name('reviews.public');
 
 Route::get('/about-us', function () { return view('aboutus'); })->name('aboutus');
 
@@ -40,48 +37,55 @@ Route::get('/rooms/{room}/reserve', [ReservationController::class, 'create'])->n
 Route::post('/reservations', [ReservationController::class, 'store'])->name('reservations.store');
 Route::get('/reservations/{reservation}/success', [ReservationController::class, 'success'])->name('reservations.success');
 
+// Detalles individuales públicos
+Route::get('/rooms/{room}', [RoomController::class, 'show'])->name('rooms.show');
+Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show');
+
+
 /*
 |--------------------------------------------------------------------------
-| Rutas Protegidas (Solo para usuarios autenticados / Admin)
+| Rutas para Usuarios Autenticados (Cualquier usuario registrado)
 |--------------------------------------------------------------------------
 */
 Route::middleware(['auth'])->group(function () {
-
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
-    // 1. Gestión de Habitaciones ( Panel Admin - Excluimos 'show' para que sea pública )
+    // Perfil de usuario (Breeze)
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Rutas Exclusivas para el Administrador (Protegidas con 'auth' y 'admin')
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth', 'admin'])->group(function () {
+
+    // 1. Gestión de Habitaciones (Panel Admin - Excluimos 'show' que ya es pública)
     Route::resource('rooms', RoomController::class)->except(['show']);
 
     // 2. Gestión de Servicios (Panel Admin)
     Route::get('/admin/services', [ServiceController::class, 'index'])->name('services.index');
     Route::resource('services', ServiceController::class)->except(['index', 'show']);
 
-    // --- OTRAS RUTAS DE GESTIÓN (ADMIN) ---
-
-    // Reservas (CRUD del Administrador: index, destroy, etc.)
+    // 3. Reservas (CRUD del Administrador)
     Route::resource('reservations', ReservationController::class)->except(['create', 'store', 'show']);
+    Route::get('/admin/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+    Route::delete('/admin/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 
-    // Reseñas (Listar, guardar y eliminar)
+    // 4. Reseñas (Moderación de Admin)
     Route::get('/admin/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+    Route::patch('/reviews/{review}/toggle', [ReviewController::class, 'toggleApproval'])->name('reviews.toggle');
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
     Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
 
-    // Bandeja de Mensajes de Contacto (Admin)
+    // 5. Bandeja de Mensajes de Contacto (Admin)
     Route::resource('contact_messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
-
-    // Perfil de usuario (Breeze)
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    // Vistas exclusivas del Panel Admin para reservas
-    Route::get('/admin/reservations', [ReservationController::class, 'index'])->name('reservations.index');
-    Route::delete('/admin/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
 });
 
-Route::get('/rooms/{room}', [RoomController::class, 'show'])->name('rooms.show');
-Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show');
-Route::get('/opiniones', [ReviewController::class, 'publicIndex'])->name('reviews.public');
 require __DIR__.'/auth.php';

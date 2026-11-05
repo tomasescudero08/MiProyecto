@@ -67,7 +67,7 @@
                         <a class="nav-link nav-link-hotel {{ request()->routeIs('services.catalogue') ? 'active' : '' }}" href="{{ route('services.catalogue') }}">Servicios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-hotel active" href="{{ route('aboutus') }}">Sobre Nosotros</a>
+                        <a class="nav-link nav-link-hotel" href="{{ route('aboutus') }}">Sobre Nosotros</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-link-hotel" href="{{ route('contactus') }}">Contáctanos</a>
