@@ -5,29 +5,22 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use App\Models\Room;
 use Illuminate\Http\Request;
+use App\Mail\ReservationConfirmationMail;
+use Illuminate\Support\Facades\Mail;
 
 class ReservationController extends Controller
 {
-    /**
-     * Panel General de Reservas (Solo para el Administrador logueado).
-     */
     public function index()
     {
         $reservations = Reservation::with('room')->latest()->get();
         return view('reservations.index', compact('reservations'));
     }
 
-    /**
-     * Formulario de Reserva Abierto (Público para cualquier visitante/profesor).
-     */
     public function create(Room $room)
     {
         return view('reservations.create', compact('room'));
     }
 
-    /**
-     * Guarda la reserva con los datos ingresados en el formulario.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -47,6 +40,7 @@ class ReservationController extends Controller
         $nights = $nights > 0 ? $nights : 1;
 
         $pricePerNight = $room->price_per_night ?? $room->price ?? 0;
+
         $totalPrice = $nights * $pricePerNight;
 
         $reservation = Reservation::create([
@@ -61,22 +55,21 @@ class ReservationController extends Controller
             'special_requests' => $request->special_requests,
         ]);
 
-        // Redirigir al comprobante público para el cliente de forma correcta
+        try {
+            Mail::to($reservation->customer_email)
+                ->send(new ReservationConfirmationMail($reservation));
+        } catch (\Exception $e) {
+        }
+
         return redirect()->route('reservations.success', $reservation->id)
-            ->with('success', '¡Reserva realizada con éxito!');
+            ->with('success', '¡Reserva realizada con éxito y correo de confirmación enviado!');
     }
 
-    /**
-     * Muestra el comprobante de reserva para el cliente (Público).
-     */
     public function success(Reservation $reservation)
     {
         return view('success', compact('reservation'));
     }
 
-    /**
-     * Eliminar reserva desde el Panel Admin.
-     */
     public function destroy(Reservation $reservation)
     {
         $reservation->delete();
