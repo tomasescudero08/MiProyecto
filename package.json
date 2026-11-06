@@ -21,6 +21,8 @@
         "@laravel/multiplex": "^0.4.1"
     },
     "dependencies": {
+        "@sentry/node": "^11.11.0",
+        "@sentry/react": "^11.11.0",
         "axios": "^1.21.0",
         "bootstrap": "^5.3.8"
     }

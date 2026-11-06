@@ -7,6 +7,7 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ContactMessageController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -86,6 +87,21 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // 5. Bandeja de Mensajes de Contacto (Admin)
     Route::resource('contact_messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
+});
+
+Route::get('/test-b2', function () {
+    // 1. Guardar un archivo de prueba en B2
+    Storage::disk('s3')->put('test-upload.txt', '¡Hola desde Laravel y Backblaze B2!');
+
+    // 2. Verificar si existe
+    if (Storage::disk('s3')->exists('test-upload.txt')) {
+        // 3. Obtener la URL pública o temporal para recuperarlo
+        $url = Storage::disk('s3')->url('test-upload.txt');
+
+        return "¡Archivo subido con éxito a Backblaze B2! URL: " . $url;
+    }
+
+    return "Error al subir el archivo.";
 });
 
 require __DIR__.'/auth.php';
