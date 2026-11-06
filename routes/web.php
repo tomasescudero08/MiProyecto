@@ -89,19 +89,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('contact_messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
 });
 
-Route::get('/test-b2', function () {
-    // 1. Guardar un archivo de prueba en B2
-    Storage::disk('s3')->put('test-upload.txt', '¡Hola desde Laravel y Backblaze B2!');
+Route::get('/test-produccion-b2', function () {
+    try {
+        // Intenta guardar un archivo de texto en B2 usando el disco s3
+        Storage::disk('s3')->put('prueba-prod.txt', '¡Hola desde producción a Backblaze B2!');
 
-    // 2. Verificar si existe
-    if (Storage::disk('s3')->exists('test-upload.txt')) {
-        // 3. Obtener la URL pública o temporal para recuperarlo
-        $url = Storage::disk('s3')->url('test-upload.txt');
-
-        return "¡Archivo subido con éxito a Backblaze B2! URL: " . $url;
+        return "¡Éxito! El archivo se subió correctamente a Backblaze B2 desde producción.";
+    } catch (\Exception $e) {
+        return "Error al conectar con B2: " . $e->getMessage();
     }
-
-    return "Error al subir el archivo.";
 });
 
 require __DIR__.'/auth.php';
