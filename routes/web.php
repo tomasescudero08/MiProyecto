@@ -104,17 +104,19 @@ Route::get('/test-produccion-b2', function () {
 
 Route::get('/test-email', function () {
     try {
-        // Objeto o array dummy para alimentar $reservation
+        // Objeto con las propiedades exactas que requiere la vista Blade
         $reservationDummy = (object) [
-            'cliente' => 'Tomas Escudero',
-            'habitacion' => 'Suite 101',
-            'fecha' => '2026-11-10',
+            'customer_name' => 'Tomas Escudero',
+            'room_id' => '101',
+            'check_in' => '2026-11-10',
+            'check_out' => '2026-11-15',
+            'total_price' => 350000,
         ];
 
         Mail::to('tomas.escudero3010@gmail.com')
             ->send(new ReservationConfirmationMail($reservationDummy));
 
-        return "¡Correo de prueba enviado con éxito a través de Resend!";
+        return "¡Correo enviado con éxito a través de Resend y tu dominio verificado!";
     } catch (\Exception $e) {
         return "Error atrapado: " . $e->getMessage();
     }
