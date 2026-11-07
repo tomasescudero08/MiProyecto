@@ -8,6 +8,8 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ContactMessageController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use App\Mail\ReservationConfirmationMail;
+use Illuminate\Support\Facades\Mail;
 
 /*
 |--------------------------------------------------------------------------
@@ -98,6 +100,15 @@ Route::get('/test-produccion-b2', function () {
     } catch (\Exception $e) {
         return "Error al conectar con B2: " . $e->getMessage();
     }
+});
+
+Route::get('/test-email', function () {
+    $datosPrueba = ['nombre' => 'Tomas'];
+
+    Mail::to('tomas.escudero3010@gmail.com')
+        ->send(new ReservationConfirmationMail($datosPrueba));
+
+    return "¡Correo enviado con éxito a través de Resend!";
 });
 
 require __DIR__.'/auth.php';
