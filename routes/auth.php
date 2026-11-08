@@ -10,11 +10,6 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -30,47 +25,9 @@ Route::middleware('guest')->group(function () {
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
 
-    Route::post('forgot-password', function (Request $request) {
-        $request->validate([
-            'email' => ['required', 'email'],
-        ]);
+    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+        ->name('password.email');
 
-        $user = User::where('email', $request->email)->first();
-
-        if ($user) {
-            $token = Str::random(64);
-
-            // Insertamos o actualizamos el token en la tabla PostgreSQL
-            DB::table('password_reset_tokens')->updateOrInsert(
-                ['email' => $user->email],
-                [
-                    'email' => $user->email,
-                    'token' => bcrypt($token),
-                    'created_at' => now()
-                ]
-            );
-
-            // Generamos la URL de restablecimiento
-            $url = url(route('password.reset', [
-                'token' => $token,
-                'email' => $user->email,
-            ], false));
-
-            // Enviamos el correo directamente a través de Resend
-            Mail::raw("Hola, haz clic en el siguiente enlace para restablecer tu contraseña en HotelPro: {$url}", function ($message) use ($user) {
-                $message->to($user->email)
-                    ->subject('Restablecer contraseña - HotelPro');
-            });
-        }
-
-        return back()->with('status', 'Si el correo existe en nuestro sistema, hemos enviado un enlace de recuperación.');
-    })->name('password.email');
-
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
-        ->name('password.reset');
-
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
-        ->name('password.store');
 });
 
 Route::middleware('auth')->group(function () {
