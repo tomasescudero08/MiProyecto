@@ -45,6 +45,14 @@ class User extends Authenticatable
 
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new ResetPasswordNotification($token));
+        $url = url(route('password.reset', [
+            'token' => $token,
+            'email' => $this->getEmailForPasswordReset(),
+        ], false));
+
+        Mail::raw("Hola, haz clic en el siguiente enlace para restablecer tu contraseña: {$url}", function ($message) {
+            $message->to($this->email)
+                ->subject('Restablecer contraseña - HotelPro');
+        });
     }
 }
