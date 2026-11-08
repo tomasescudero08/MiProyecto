@@ -122,4 +122,21 @@ Route::get('/test-email', function () {
     }
 });
 
+Route::get('/test-forgot', function () {
+    try {
+        $user = \App\Models\User::where('email', 'tomas.escudero3010@gmail.com')->first();
+
+        if (!$user) {
+            return "El usuario no existe en la base de datos de producción.";
+        }
+
+        $token = \Illuminate\Support\Facades\Password::createToken($user);
+        $user->sendPasswordResetNotification($token);
+
+        return "¡Notificación de recuperación enviada a Resend con éxito!";
+    } catch (\Exception $e) {
+        return "Error al enviar recuperación: " . $e->getMessage();
+    }
+});
+
 require __DIR__.'/auth.php';
