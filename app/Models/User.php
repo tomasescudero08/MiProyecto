@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -44,7 +45,9 @@ class User extends Authenticatable
     }
 
     public function sendPasswordResetNotification($token)
+
     {
+        \Log::info('Reset llamado para: ' . $this->email);
         $url = url(route('password.reset', [
             'token' => $token,
             'email' => $this->getEmailForPasswordReset(),
