@@ -61,6 +61,13 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+if (app()->isLocal()) {
+    Route::get('/mail-preview', fn () => view('emails.reset-password', [
+        'url' => url('/reset-password/token-demo'),
+        'expire' => 60,
+        'heroImage' => config('mail.hero_image'),
+    ]));
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -90,13 +97,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // 5. Bandeja de Mensajes de Contacto (Admin)
     Route::resource('contact_messages', ContactMessageController::class)->only(['index', 'show', 'destroy']);
 
-    if (app()->isLocal()) {
-        Route::get('/mail-preview', fn () => view('emails.reset-password', [
-            'url' => url('/reset-password/token-demo'),
-            'expire' => 60,
-            'heroImage' => config('mail.hero_image'),
-        ]));
-    }
 });
 
 require __DIR__.'/auth.php';
