@@ -300,6 +300,8 @@
             <p class="footer-copyright mb-0">
                 &copy; {{ date('Y') }} HotelPro. Todos los derechos reservados.
             </p>
+            <a href="{{ route('privacy.policy') }}" target="_blank" class="text-gold text-decoration-none">Política de Privacidad y Tratamiento de Datos</a>
+
         </div>
     </div>
 </footer>
