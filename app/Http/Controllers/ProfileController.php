@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
+
 class ProfileController extends Controller
 {
     /**
@@ -42,6 +43,7 @@ class ProfileController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        // 1. Protección de la operación mediante verificación de contraseña
         $request->validateWithBag('userDeletion', [
             'password' => ['required', 'current_password'],
         ]);
@@ -50,11 +52,12 @@ class ProfileController extends Controller
 
         Auth::logout();
 
-        $user->delete();
+        // 2. Proceso de anonimización y conservación de registros asociados
+        $user->anonymizeAccount();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        return redirect('/')->with('status', 'Tu cuenta ha sido eliminada y tus datos personales han sido anonimizados conforme a la normativa vigente.');
     }
 }

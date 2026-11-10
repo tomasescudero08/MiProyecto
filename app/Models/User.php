@@ -6,7 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -42,5 +43,20 @@ class User extends Authenticatable
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+    use SoftDeletes;
+
+    /**
+     * Anonimiza los datos personales y aplica borrado suave (SoftDelete).
+     */
+    public function anonymizeAccount(): void
+    {
+        $this->update([
+            'name' => 'Usuario Anonimizado #' . $this->id,
+            'email' => 'deleted_' . $this->id . '_' . Str::random(8) . '@miproyecto.website',
+            'password' => bcrypt(Str::random(32)),
+        ]);
+
+        $this->delete();
     }
 }
