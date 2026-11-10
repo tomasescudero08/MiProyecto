@@ -69,6 +69,8 @@ if (app()->isLocal()) {
     ]));
 }
 
+Route::view('/politica-de-privacidad', 'legal.privacy-policy')->name('privacy.policy');
+
 /*
 |--------------------------------------------------------------------------
 | Rutas Exclusivas para el Administrador (Protegidas con 'auth' y 'admin')

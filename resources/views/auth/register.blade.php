@@ -60,6 +60,16 @@
                 @enderror
             </div>
 
+            <div class="mb-3 form-check">
+                <input type="checkbox" class="form-check-input @error('terms') is-invalid @enderror" id="terms" name="terms" required>
+                <label class="form-check-label small text-white opacity-75" for="terms">
+                    Acepto la <a href="{{ route('privacy.policy') }}" target="_blank" class="text-gold text-decoration-none">Política de Tratamiento de Datos Personales</a> conforme a la Ley 1581 de 2012.
+                </label>
+                @error('terms')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
             <button type="submit" class="btn btn-gold-solid w-100 py-2 mb-3">Registrarse</button>
 
             <div class="text-center">
