@@ -4,8 +4,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>HotelPro - Perfil de Usuario</title>
+    <!-- Bootstrap CSS v5.3.8 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons v1.13.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <!-- SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <!-- Estilos personalizados -->
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <style>
         body { background-color: #121519; color: #e0e0e0; font-family: 'Montserrat', sans-serif; }
@@ -14,6 +19,20 @@
         .form-control:focus { background-color: #121519; border-color: #d4af37; color: #fff; box-shadow: 0 0 0 0.25rem rgba(212, 175, 55, 0.25); }
         .text-gold { color: #d4af37 !important; }
         .form-label { font-size: 0.85rem; letter-spacing: 0.5px; }
+
+        /* Estilos oscuros personalizados para SweetAlert2 */
+        .swal2-popup-hotel {
+            background-color: #171a1f !important;
+            border: 1px solid rgba(212, 175, 55, 0.4) !important;
+            color: #ffffff !important;
+            border-radius: 10px !important;
+        }
+        .swal2-title-hotel { color: #d4af37 !important; }
+        .swal2-confirm-hotel {
+            background-color: #d4af37 !important;
+            color: #121519 !important;
+            font-weight: bold !important;
+        }
     </style>
 </head>
 <body class="py-5">
@@ -31,18 +50,6 @@
     </div>
 
     <h2 class="text-white fw-bold mb-4 fs-4">Perfil de Usuario y Privacidad</h2>
-
-    @if (session('status') === 'profile-updated')
-        <div class="alert alert-success bg-dark text-success border-success small mb-4" role="alert">
-            <i class="bi bi-check-circle-fill me-1"></i> Información actualizada correctamente.
-        </div>
-    @endif
-
-    @if (session('status') === 'password-updated')
-        <div class="alert alert-success bg-dark text-success border-success small mb-4" role="alert">
-            <i class="bi bi-check-circle-fill me-1"></i> Contraseña actualizada correctamente.
-        </div>
-    @endif
 
     <div class="space-y-6">
 
@@ -98,33 +105,34 @@
         <!-- 2. Actualizar Contraseña -->
         <div class="auth-card p-4 p-md-4 mb-4">
             <h4 class="text-gold fs-5 fw-bold mb-2">Actualizar Contraseña</h4>
-            <p class="text-white small opacity-75 mb-4">Asegúrate de que tu cuenta esté usando una contraseña larga y aleatoria para mantenerse segura.</p>
+            <p class="text-white small opacity-75 mb-4">Ingresa tu contraseña actual y define tu nueva clave de acceso.</p>
 
-            <form method="post" action="{{ route('password.update') }}">
+            <form id="updatePasswordForm" method="post" action="{{ route('password.update') }}">
                 @csrf
                 @method('put')
 
                 <div class="mb-3">
-                    <label for="update_password_current_password" class="form-label text-white text-uppercase fw-semibold">Contraseña Actual</label>
-                    <input id="update_password_current_password" name="current_password" type="password" class="form-control @error('updatePassword', 'current_password') is-invalid @enderror" autocomplete="current-password">
-                    @error('updatePassword.current_password')
+                    <label for="update_password_current_password" class="form-label text-white text-uppercase fw-semibold">Contraseña Actual *</label>
+                    <input id="update_password_current_password" name="current_password" type="password" class="form-control @error('current_password', 'updatePassword') is-invalid @enderror" required autocomplete="current-password">
+                    @error('current_password', 'updatePassword')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label for="update_password_password" class="form-label text-white text-uppercase fw-semibold">Nueva Contraseña</label>
-                    <input id="update_password_password" name="password" type="password" class="form-control @error('updatePassword', 'password') is-invalid @enderror" autocomplete="new-password">
-                    @error('updatePassword.password')
+                    <label for="update_password_password" class="form-label text-white text-uppercase fw-semibold">Nueva Contraseña *</label>
+                    <input id="update_password_password" name="password" type="password" class="form-control @error('password', 'updatePassword') is-invalid @enderror" required autocomplete="new-password">
+                    @error('password', 'updatePassword')
                     <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-4">
-                    <label for="update_password_password_confirmation" class="form-label text-white text-uppercase fw-semibold">Confirmar Contraseña</label>
-                    <input id="update_password_password_confirmation" name="password_confirmation" type="password" class="form-control @error('updatePassword', 'password_confirmation') is-invalid @enderror" autocomplete="new-password">
-                    @error('updatePassword.password_confirmation')
-                    <div class="invalid-feedback">{{ $message }}</div>
+                    <label for="update_password_password_confirmation" class="form-label text-white text-uppercase fw-semibold">Confirmar Nueva Contraseña *</label>
+                    <input id="update_password_password_confirmation" name="password_confirmation" type="password" class="form-control @error('password_confirmation', 'updatePassword') is-invalid @enderror" required autocomplete="new-password">
+                    <div id="passwordMismatchError" class="invalid-feedback" style="display: none;">Las contraseñas no coinciden.</div>
+                    @error('password_confirmation', 'updatePassword')
+                    <div class="invalid-feedback" style="display: block;">{{ $message }}</div>
                     @enderror
                 </div>
 
@@ -189,6 +197,91 @@
     </div>
 </div>
 
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+<!-- SweetAlert2 JS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const passwordForm = document.getElementById('updatePasswordForm');
+        const newPassword = document.getElementById('update_password_password');
+        const confirmPassword = document.getElementById('update_password_password_confirmation');
+        const mismatchError = document.getElementById('passwordMismatchError');
+
+        // Validar coincidencia de contraseñas en cliente antes de enviar
+        passwordForm.addEventListener('submit', function (e) {
+            if (newPassword.value !== confirmPassword.value) {
+                e.preventDefault();
+                confirmPassword.classList.add('is-invalid');
+                mismatchError.style.display = 'block';
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Contraseñas no coinciden',
+                    text: 'La nueva contraseña y su confirmación deben ser exactamente iguales.',
+                    customClass: {
+                        popup: 'swal2-popup-hotel',
+                        title: 'swal2-title-hotel',
+                        confirmButton: 'swal2-confirm-hotel'
+                    }
+                });
+            } else {
+                confirmPassword.classList.remove('is-invalid');
+                mismatchError.style.display = 'none';
+            }
+        });
+
+        // Desactivar estado de error al escribir
+        confirmPassword.addEventListener('input', function() {
+            if (newPassword.value === confirmPassword.value) {
+                confirmPassword.classList.remove('is-invalid');
+                mismatchError.style.display = 'none';
+            }
+        });
+
+        // Notificaciones de SweetAlert2 basadas en mensajes de sesión o errores del servidor
+        @if (session('status') === 'password-updated')
+        Swal.fire({
+            icon: 'success',
+            title: '¡Contraseña actualizada!',
+            text: 'Tu clave de acceso ha sido modificada exitosamente.',
+            timer: 3500,
+            showConfirmButton: false,
+            customClass: {
+                popup: 'swal2-popup-hotel',
+                title: 'swal2-title-hotel'
+            }
+        });
+        @endif
+
+        @if (session('status') === 'profile-updated')
+        Swal.fire({
+            icon: 'success',
+            title: '¡Perfil actualizado!',
+            text: 'Tus datos personales fueron guardados con éxito.',
+            timer: 3500,
+            showConfirmButton: false,
+            customClass: {
+                popup: 'swal2-popup-hotel',
+                title: 'swal2-title-hotel'
+            }
+        });
+        @endif
+
+        @if ($errors->updatePassword->any())
+        Swal.fire({
+            icon: 'error',
+            title: 'Error al actualizar',
+            text: '{{ $errors->updatePassword->first() }}',
+            customClass: {
+                popup: 'swal2-popup-hotel',
+                title: 'swal2-title-hotel',
+                confirmButton: 'swal2-confirm-hotel'
+            }
+        });
+        @endif
+    });
+</script>
 </body>
 </html>
