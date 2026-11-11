@@ -50,6 +50,7 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end bg-dark border-secondary" aria-labelledby="userDropdown">
                                 <li><a class="dropdown-item text-white active" href="{{ route('dashboard') }}">Panel de Control</a></li>
+                                <li><a class="dropdown-item text-white" href="{{ route('profile.edit') }}">Mi Perfil</a></li>
                                 @if(Auth::user()->is_admin)
                                     <li><a class="dropdown-item text-warning" href="{{ route('reservations.index') }}">Ver Todas las Reservas</a></li>
                                 @else
@@ -225,8 +226,13 @@
                             <p class="text-white opacity-75 small mt-2"><strong>Correo:</strong> {{ Auth::user()->email }}</p>
                             <p class="text-white opacity-75 small"><strong>Miembro desde:</strong> {{ Auth::user()->created_at->format('d/m/Y') }}</p>
                         </div>
-                        <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 text-white small opacity-75">
-                            <span class="text-gold"><i class="bi bi-shield-fill-check me-1"></i> Usuario Verificado</span>
+                        <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 d-flex flex-column gap-2">
+                            <a href="{{ route('profile.edit') }}" class="btn btn-gold-solid w-100 btn-sm fw-semibold">
+                                <i class="bi bi-gear-fill me-1"></i> Gestionar Perfil y Datos
+                            </a>
+                            <div class="text-center mt-1">
+                                <span class="text-gold small opacity-75"><i class="bi bi-shield-fill-check me-1"></i> Usuario Verificado</span>
+                            </div>
                         </div>
                     </div>
                 </div>
