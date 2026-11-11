@@ -307,7 +307,7 @@
                     </button>
 
                     @auth
-                        @if(auth()->user()->isAdmin ?? true)
+                        @if(Auth::user()->is_admin)
                             <a href="{{ route('reviews.index') }}" class="btn btn-gold-outline text-uppercase">GESTIONAR RESEÑAS</a>
                         @else
                             <a href="{{ route('reviews.public') }}" class="btn btn-gold-outline text-uppercase">VER TODAS LAS RESEÑAS</a>

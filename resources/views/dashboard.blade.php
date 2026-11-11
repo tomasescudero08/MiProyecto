@@ -222,7 +222,7 @@
                         <div>
                             <div class="service-icon mb-3 text-gold fs-2"><i class="bi bi-person-badge-fill"></i></div>
                             <h5 class="service-title text-white fw-bold">Mi Cuenta</h5>
-                            <p class="text-white opacity-75 small mt-2"><strong>Hola:</strong> {{ Auth::user()->name}}</p>
+                            <p class="text-white opacity-75 small mt-2"><strong>Hola, </strong> {{ Auth::user()->name}}</p>
                             <p class="text-white opacity-75 small mt-2"><strong>Correo:</strong> {{ Auth::user()->email }}</p>
                             <p class="text-white opacity-75 small"><strong>Miembro desde:</strong> {{ Auth::user()->created_at->format('d/m/Y') }}</p>
                         </div>
